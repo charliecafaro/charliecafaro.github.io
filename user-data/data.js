@@ -12,11 +12,11 @@ export const skills = [
 
 export const experience = [
   {
-    title: "Shiprocket Private Limited",
-    duration: "September 2023 - Present",
-    subtitle: "Software Engineer",
-    details: ["Working in support and escalation team."],
-    tags: ["JavaScript", "Angular", "Bootstrap", "AngularJs"],
+    title: "Homa Games",
+    duration: "February 2022 - Present",
+    subtitle: "Technical Artist",
+    details: ["Working in the marketing department and iterating on dozens of different projects."],
+    tags: ["Unity", "C#", "Blender", "Photoshop", "Illustrator", "Spine 2D", "After Effects", "Github"],
     icon: "truck ",
   },
   {
