@@ -5,7 +5,9 @@ import { projects } from "./data.js";
 
   var isMobile = {
     any: function () {
-      return /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent);
+      return /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(
+          navigator.userAgent
+      );
     },
   };
 
@@ -15,20 +17,6 @@ import { projects } from "./data.js";
       $(window).resize(function () {
         $(".js-fullheight").css("height", $(window).height());
       });
-    }
-  };
-
-  var counterWayPoint = function () {
-    if ($("#colorlib-counter").length > 0) {
-      $("#colorlib-counter").waypoint(
-          function (direction) {
-            if (direction === "down" && !$(this.element).hasClass("animated")) {
-              setTimeout(counter, 400);
-              $(this.element).addClass("animated");
-            }
-          },
-          { offset: "90%" }
-      );
     }
   };
 
@@ -42,15 +30,10 @@ import { projects } from "./data.js";
             setTimeout(function () {
               $("body .animate-box.item-animate").each(function (k) {
                 var el = $(this);
-                setTimeout(
-                    function () {
-                      var effect = el.data("animate-effect");
-                      el.addClass(effect ? `${effect} animated` : "fadeInUp animated");
-                      el.removeClass("item-animate");
-                    },
-                    k * 200,
-                    "easeInOutExpo"
-                );
+                setTimeout(function () {
+                  el.addClass("fadeInUp animated");
+                  el.removeClass("item-animate");
+                }, k * 200, "easeInOutExpo");
               });
             }, 100);
           }
@@ -76,88 +59,13 @@ import { projects } from "./data.js";
         $(".js-colorlib-nav-toggle").removeClass("active");
       }
     });
-
-    $(window).scroll(function () {
-      if ($("body").hasClass("offcanvas")) {
-        $("body").removeClass("offcanvas");
-        $(".js-colorlib-nav-toggle").removeClass("active");
-      }
-    });
-  };
-
-  var clickMenu = function () {
-    $('#navbar a:not([class="external"])').click(function (event) {
-      var section = $(this).data("nav-section"),
-          navbar = $("#navbar");
-
-      if ($('[data-section="' + section + '"]').length) {
-        $("html, body").animate(
-            {
-              scrollTop: $('[data-section="' + section + '"]').offset().top - 55,
-            },
-            500
-        );
-      }
-
-      if (navbar.is(":visible")) {
-        navbar.removeClass("in");
-        navbar.attr("aria-expanded", "false");
-        $(".js-colorlib-nav-toggle").removeClass("active");
-      }
-
-      event.preventDefault();
-      return false;
-    });
-  };
-
-  var navActive = function (section) {
-    var $el = $("#navbar > ul");
-    $el.find("li").removeClass("active");
-    $el.each(function () {
-      $(this)
-          .find('a[data-nav-section="' + section + '"]')
-          .closest("li")
-          .addClass("active");
-    });
-  };
-
-  var navigationSection = function () {
-    var $section = $("section[data-section]");
-
-    $section.waypoint(
-        function (direction) {
-          if (direction === "down") {
-            navActive($(this.element).data("section"));
-          }
-        },
-        {
-          offset: "150px",
-        }
-    );
-
-    $section.waypoint(
-        function (direction) {
-          if (direction === "up") {
-            navActive($(this.element).data("section"));
-          }
-        },
-        {
-          offset: function () {
-            return -$(this.element).height() + 155;
-          },
-        }
-    );
   };
 
   $(function () {
     fullHeight();
-    counterWayPoint();
     contentWayPoint();
     burgerMenu();
-    clickMenu();
-    navigationSection();
     mobileMenuOutsideClick();
-    detectDayNightMode();
     renderProjects();
     bindVideoModal();
   });
@@ -168,7 +76,7 @@ import { projects } from "./data.js";
 -------------------- */
 function unlockConfidential() {
   const pwd = prompt("Enter password:");
-  if (pwd === "yourSecret123") {
+  if (pwd === "blue123") {
     document.querySelectorAll(".confidential").forEach((el) => {
       el.style.display = "block";
     });
@@ -207,17 +115,27 @@ function bindVideoModal() {
    PROJECT RENDERING
 -------------------- */
 function renderProjects() {
-  const container = document.getElementById("accordion");
+  const container = document.getElementById("projects-accordion");
   if (!container) return;
 
   projects.forEach((cat) => {
     const catDiv = document.createElement("div");
-    catDiv.className = "project-category" + (cat.confidential ? " confidential" : "");
+    catDiv.className =
+        "project-category" + (cat.confidential ? " confidential" : "");
     if (cat.confidential) catDiv.style.display = "none";
 
-    const catHeader = document.createElement("h3");
-    catHeader.textContent = cat.category;
-    catDiv.appendChild(catHeader);
+    const header = document.createElement("div");
+    header.className = "project-header";
+    header.textContent = cat.category;
+    header.onclick = () => {
+      const content = catDiv.querySelector(".project-content");
+      content.style.display =
+          content.style.display === "block" ? "none" : "block";
+    };
+    catDiv.appendChild(header);
+
+    const content = document.createElement("div");
+    content.className = "project-content";
 
     cat.groups.forEach((group) => {
       const groupDiv = document.createElement("div");
@@ -227,31 +145,22 @@ function renderProjects() {
       title.textContent = group.title;
       groupDiv.appendChild(title);
 
+      const grid = document.createElement("div");
+      grid.className = "video-grid";
+
       group.videos.forEach((v) => {
         const thumb = document.createElement("div");
         thumb.className = "video-thumb";
         thumb.innerHTML = `<img src="${v.thumb}" alt="${v.title}"><span>${v.title}</span>`;
         thumb.onclick = () => openVideo(v.src, v.title);
-        groupDiv.appendChild(thumb);
+        grid.appendChild(thumb);
       });
 
-      catDiv.appendChild(groupDiv);
+      groupDiv.appendChild(grid);
+      content.appendChild(groupDiv);
     });
 
+    catDiv.appendChild(content);
     container.appendChild(catDiv);
   });
-}
-
-/* -------------------
-   DARK MODE
--------------------- */
-function enableDarkMode() {
-  document.body.classList.toggle("dark-mode");
-}
-
-function detectDayNightMode() {
-  const hours = new Date().getHours();
-  if (hours <= 6 || hours >= 20) {
-    enableDarkMode();
-  }
 }
