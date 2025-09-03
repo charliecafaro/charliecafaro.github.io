@@ -1,3 +1,5 @@
+import { projects } from "./data.js";
+
 (function () {
   "use strict";
 
@@ -19,13 +21,13 @@
   var counterWayPoint = function () {
     if ($("#colorlib-counter").length > 0) {
       $("#colorlib-counter").waypoint(
-        function (direction) {
-          if (direction === "down" && !$(this.element).hasClass("animated")) {
-            setTimeout(counter, 400);
-            $(this.element).addClass("animated");
-          }
-        },
-        { offset: "90%" }
+          function (direction) {
+            if (direction === "down" && !$(this.element).hasClass("animated")) {
+              setTimeout(counter, 400);
+              $(this.element).addClass("animated");
+            }
+          },
+          { offset: "90%" }
       );
     }
   };
@@ -33,27 +35,27 @@
   var contentWayPoint = function () {
     var i = 0;
     $(".animate-box").waypoint(
-      function (direction) {
-        if (direction === "down" && !$(this.element).hasClass("animated")) {
-          i++;
-          $(this.element).addClass("item-animate");
-          setTimeout(function () {
-            $("body .animate-box.item-animate").each(function (k) {
-              var el = $(this);
-              setTimeout(
-                function () {
-                  var effect = el.data("animate-effect");
-                  el.addClass(effect ? `${effect} animated` : "fadeInUp animated");
-                  el.removeClass("item-animate");
-                },
-                k * 200,
-                "easeInOutExpo"
-              );
-            });
-          }, 100);
-        }
-      },
-      { offset: "85%" }
+        function (direction) {
+          if (direction === "down" && !$(this.element).hasClass("animated")) {
+            i++;
+            $(this.element).addClass("item-animate");
+            setTimeout(function () {
+              $("body .animate-box.item-animate").each(function (k) {
+                var el = $(this);
+                setTimeout(
+                    function () {
+                      var effect = el.data("animate-effect");
+                      el.addClass(effect ? `${effect} animated` : "fadeInUp animated");
+                      el.removeClass("item-animate");
+                    },
+                    k * 200,
+                    "easeInOutExpo"
+                );
+              });
+            }, 100);
+          }
+        },
+        { offset: "85%" }
     );
   };
 
@@ -86,14 +88,14 @@
   var clickMenu = function () {
     $('#navbar a:not([class="external"])').click(function (event) {
       var section = $(this).data("nav-section"),
-        navbar = $("#navbar");
+          navbar = $("#navbar");
 
       if ($('[data-section="' + section + '"]').length) {
         $("html, body").animate(
-          {
-            scrollTop: $('[data-section="' + section + '"]').offset().top - 55,
-          },
-          500
+            {
+              scrollTop: $('[data-section="' + section + '"]').offset().top - 55,
+            },
+            500
         );
       }
 
@@ -113,9 +115,9 @@
     $el.find("li").removeClass("active");
     $el.each(function () {
       $(this)
-        .find('a[data-nav-section="' + section + '"]')
-        .closest("li")
-        .addClass("active");
+          .find('a[data-nav-section="' + section + '"]')
+          .closest("li")
+          .addClass("active");
     });
   };
 
@@ -123,27 +125,27 @@
     var $section = $("section[data-section]");
 
     $section.waypoint(
-      function (direction) {
-        if (direction === "down") {
-          navActive($(this.element).data("section"));
+        function (direction) {
+          if (direction === "down") {
+            navActive($(this.element).data("section"));
+          }
+        },
+        {
+          offset: "150px",
         }
-      },
-      {
-        offset: "150px",
-      }
     );
 
     $section.waypoint(
-      function (direction) {
-        if (direction === "up") {
-          navActive($(this.element).data("section"));
-        }
-      },
-      {
-        offset: function () {
-          return -$(this.element).height() + 155;
+        function (direction) {
+          if (direction === "up") {
+            navActive($(this.element).data("section"));
+          }
         },
-      }
+        {
+          offset: function () {
+            return -$(this.element).height() + 155;
+          },
+        }
     );
   };
 
@@ -156,30 +158,93 @@
     navigationSection();
     mobileMenuOutsideClick();
     detectDayNightMode();
+    renderProjects();
+    bindVideoModal();
   });
 })();
 
-var Accordion = function (el, multiple) {
-  this.el = el || {};
-  this.multiple = multiple || false;
-  var links = this.el.find(".link");
-  links.on("click", { el: this.el, multiple: this.multiple }, this.dropdown);
-};
-
-Accordion.prototype.dropdown = function (e) {
-  var $el = e.data.el;
-  var $this = $(this), $next = $this.next();
-
-  $next.slideToggle();
-  $this.parent().toggleClass("open");
-
-  if (!e.data.multiple) {
-    $el.find(".submenu").not($next).slideUp().parent().removeClass("open");
+/* -------------------
+   CONFIDENTIAL UNLOCK
+-------------------- */
+function unlockConfidential() {
+  const pwd = prompt("Enter password:");
+  if (pwd === "yourSecret123") {
+    document.querySelectorAll(".confidential").forEach((el) => {
+      el.style.display = "block";
+    });
+  } else {
+    alert("Wrong password.");
   }
-};
+}
 
-var accordion = new Accordion($("#accordion"), false);
+/* -------------------
+   VIDEO MODAL
+-------------------- */
+function openVideo(src, title) {
+  const modal = document.getElementById("videoModal");
+  const video = modal.querySelector("video");
+  const caption = modal.querySelector(".caption");
 
+  video.src = src;
+  caption.textContent = title;
+  modal.style.display = "flex";
+  video.play();
+}
+
+function closeVideo() {
+  const modal = document.getElementById("videoModal");
+  const video = modal.querySelector("video");
+  modal.style.display = "none";
+  video.pause();
+  video.src = "";
+}
+
+function bindVideoModal() {
+  document.querySelector("#videoModal .close").addEventListener("click", closeVideo);
+}
+
+/* -------------------
+   PROJECT RENDERING
+-------------------- */
+function renderProjects() {
+  const container = document.getElementById("accordion");
+  if (!container) return;
+
+  projects.forEach((cat) => {
+    const catDiv = document.createElement("div");
+    catDiv.className = "project-category" + (cat.confidential ? " confidential" : "");
+    if (cat.confidential) catDiv.style.display = "none";
+
+    const catHeader = document.createElement("h3");
+    catHeader.textContent = cat.category;
+    catDiv.appendChild(catHeader);
+
+    cat.groups.forEach((group) => {
+      const groupDiv = document.createElement("div");
+      groupDiv.className = "project-group";
+
+      const title = document.createElement("h4");
+      title.textContent = group.title;
+      groupDiv.appendChild(title);
+
+      group.videos.forEach((v) => {
+        const thumb = document.createElement("div");
+        thumb.className = "video-thumb";
+        thumb.innerHTML = `<img src="${v.thumb}" alt="${v.title}"><span>${v.title}</span>`;
+        thumb.onclick = () => openVideo(v.src, v.title);
+        groupDiv.appendChild(thumb);
+      });
+
+      catDiv.appendChild(groupDiv);
+    });
+
+    container.appendChild(catDiv);
+  });
+}
+
+/* -------------------
+   DARK MODE
+-------------------- */
 function enableDarkMode() {
   document.body.classList.toggle("dark-mode");
 }

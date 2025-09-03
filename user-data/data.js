@@ -1,175 +1,115 @@
 export const bio = [
-  "Hello, I'm Vinay Somawat!",
-  "I’m a passionate and experienced <strong>Frontend Engineer</strong> specializing in developing dynamic web applications using Angular and React. I thrive on optimizing performance and delivering innovative, user-focused solutions.",
-  "Beyond coding, I enjoy traveling through the serene <strong>Himalayan mountains</strong> and experimenting with new recipes in the <strong>kitchen</strong>.",
+  "Hello, I'm Charlie Cafaro!",
+  "I’m a passionate and experienced <strong>Unity Developer</strong> specializing in gameplay, tools, and creative technical solutions.",
+  "Beyond coding, I enjoy traveling, making games, and experimenting with new ideas.",
 ];
 
 export const skills = [
-  "JavaScript, TypeScript, Angular, RxJS, NGRX/NGXS",
-  "HTML, Bootstrap, Tailwind",
-  "GitHub, Debugging, Chrome DevTools",
+  "Unity, C#, ECS/DOTS",
+  "Blender, Photoshop, Spine 2D",
+  "Shader Graph, VFX, Cinematics",
+  "Git, Addressables, Editor Tooling",
 ];
 
 export const experience = [
   {
     title: "Homa Games",
-    duration: "February 2022 - Present",
-    subtitle: "Technical Artist",
-    details: ["Working in the marketing department and iterating on dozens of different projects."],
-    tags: ["Unity", "C#", "Blender", "Photoshop", "Illustrator", "Spine 2D", "After Effects", "Github"],
-    icon: "truck ",
+    duration: "February 2022 - June 2025",
+    subtitle: "Technical Artist / Creative Unity Developer",
+    details: [
+      "Worked in the marketing department iterating on dozens of Unity projects.",
+      "Developed advanced editor tooling and automated workflows.",
+    ],
+    tags: ["Unity", "C#", "Blender", "Photoshop", "Spine 2D", "After Effects", "GitHub"],
+    icon: "truck",
   },
   {
-    title: "Biofourmis India Private Limited",
-    duration: "April 2022 - Jul 2023",
-    subtitle: "Software Engineer",
+    title: "Indie Development",
+    duration: "2016 - Present",
+    subtitle: "Game Developer",
     details: [
-      `Implemented microfrontends using the Module Federation Plugin in Angular.
-            Rendered components from remote modules/repositories, enabling a modular and scalable architecture`,
-      `Upgraded application with a dynamic base URL for flexible operation across multiple regions and verticals, leading to
-            recognition with the Biofourmis Bravo award in Q1, 2023.`,
-      `Implemented RxState for managing local state in components, resulting in elegant and reactive facades.`,
-      `Utilized Twilio-Video for group video call rooms and Countly for Web Analytics.`,
-      `Integrated NGXS WebSocket, enhancing state management and replacing legacy service injections.`,
-      `Implemented extensive RxJS usage for reactive programming, resulting in efficient data handling, improved state
-            management, and enhanced application performance.`,
-      `Dramatically optimized load time and performance through code splitting, lazy loading, caching, and preload`,
-      `Enhanced video call experience by implementing real-time switching of I/O devices and audio level indicators,
-            resulting in reduced audio issues and increased user satisfaction.`,
-      `Owned and led successful Angular application upgrades from version 12 to 13 and 14, improving performance
-            and enhancing features.`,
+      "Building survival RPG projects with ECS-based architecture.",
+      "Developing commercial Unity Asset Store tools (MaterialForge, ActionForge, etc.).",
     ],
-    tags: [
-      "JavaScript",
-      "Angular",
-      "RxJS",
-      "NGXS",
-      "TypeScript",
-      "RxState",
-      "Webpack",
-      "Optimization",
-    ],
-    icon: "heartbeat",
+    tags: ["Unity", "C#", "ECS", "Asset Store"],
+    icon: "gamepad",
   },
-  {
-    title: "Novopay Solutions Private Limited",
-    duration: "June 2020 - April 2022",
-    subtitle: "Software Engineer",
-    details: [
-      `Implemented AePS Services, including Bio-metric eKYC, Cash Withdrawal, Balance Enquiry, Mini-Statements,
-            and Money transfer.`,
-      `Implemented QR Code integration for retailer wallet money loading, Clevertap events for user action tracking,
-            Freshdesk ticketing, Chatbot services, and Retailer onboarding/admin interfaces.`,
-      `Developed retailer QR code system for seamless money loading into wallets, resulting in improved user transactions.`,
-      `Achieved 70 percent code coverage of the entire application by writing unit tests for legacy code.`,
-    ],
-    tags: ["JavaScript", "Angular", "Bootstrap", "Nodejs", "Jenkins"],
-    icon: "qrcode",
-  },
-  {
-    title: "ThinkPedia LLP",
-    duration: "May 2019 - June 2019",
-    subtitle: "SDE Intern",
-    details: [
-      `Developed a customer web application for social media management, supporting the advertisement domain.`,
-    ],
-    tags: ["JavaScript", "Angular", "Bootstrap", "Java", "Spring Boot"],
-    icon: "group",
-  },
-];
-
-export const trekking = [
-  '<strong>Kheerganga Trek</strong>, Himachal Pradesh (9,711 feet)',
-  '<strong>Triund Trek</strong>, Himachal Pradesh (9,350 feet)',
-  '<strong>Kedarkantha Trek</strong>, Uttarakhand (12,500 feet)',
-  '<strong>Jalori Pass Trek</strong>, Himachal Pradesh (10,800 feet)',
-  '<strong>Vaishno Devi Trek</strong>, Jammu & Kashmir (5,200 feet)',
 ];
 
 export const education = [
   {
-    title: "B.Tech. in Computer Science and Engineering",
-    duration: "2016 - 2020",
-    subtitle: "National Institute of Technology, Warangal",
+    title: "B.Sc. in Computer Science",
+    duration: "2012 - 2016",
+    subtitle: "Montevideo, Uruguay",
     details: [],
-    tags: [
-      "Data Structures & Algorithms",
-      "Operating Systems",
-      "Database Management System",
-      "Computer Networks",
-      "Compiler Designing",
-      "Cloud Computing",
-    ],
+    tags: ["Programming", "Software Engineering", "Graphics"],
     icon: "graduation-cap",
-  },
-  {
-    title: "Class 12th in Science and Mathematics",
-    duration: "",
-    subtitle: "Board of Secondary Education, Rajasthan",
-    details: [],
-    tags: ["Physics", "Chemistry", "Mathematics"],
-    icon: "book",
   },
 ];
 
 export const footer = [
-  //   {
-  //     label: "Dev Profiles",
-  //     data: [
-  //       {
-  //         text: "Stackoverflow",
-  //         link: "https://stackoverflow.com/users/8461233/vinay-somawat",
-  //       },
-  //       {
-  //         text: "GitHub",
-  //         link: "https://github.com/vinaysomawat",
-  //       },
-  //       {
-  //         text: "LeetCode",
-  //         link: "https://leetcode.com/somawatvinay/",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     label: "Resources",
-  //     data: [
-  //       {
-  //         text: "Enable Dark/Light Mode",
-  //         func: "enableDarkMode()",
-  //       },
-  //       {
-  //         text: "Print this page",
-  //         func: "window.print()",
-  //       },
-  //       {
-  //         text: "Clone this page",
-  //         link: "https://github.com/vinaysomawat/vinaysomawat.github.io",
-  //       },
-  //     ],
-  //   },
   {
     label: "Links",
     data: [
-      //   {
-      //     text: "Linkedin",
-      //     link: "https://www.linkedin.com/in/vinaysomawat/",
-      //   },
-      //   {
-      //     text: "Twitter",
-      //     link: "https://twitter.com/thesigmakid",
-      //   },
+      {
+        text: "GitHub",
+        link: "https://github.com/charliecafaro",
+      },
       {
         text: "Buy me a coffee",
         link: "https://www.buymeacoffee.com/r194dME8y",
-      },
-      {
-        text: "Github",
-        link: "https://github.com/vinaysomawat/vinaysomawat.github.io",
       },
     ],
   },
   {
     label: "copyright-text",
-    data: ["Made with &hearts; by Vinay Somawat"],
+    data: ["Made with &hearts; by Charlie Cafaro"],
+  },
+];
+
+/* -------------------
+   PROJECTS DATA
+-------------------- */
+export const projects = [
+  {
+    category: "Games",
+    groups: [
+      {
+        title: "Survival RPG",
+        videos: [
+          { thumb: "images/rpg-thumb1.jpg", src: "videos/rpg1.mp4", title: "Gameplay Trailer" },
+          { thumb: "images/rpg-thumb2.jpg", src: "videos/rpg2.mp4", title: "Combat Showcase" },
+        ],
+      },
+      {
+        title: "Puzzle Adventure",
+        videos: [
+          { thumb: "images/puzzle-thumb.jpg", src: "videos/puzzle.mp4", title: "Level Demo" },
+        ],
+      },
+    ],
+  },
+  {
+    category: "Tools",
+    groups: [
+      {
+        title: "Unity Editor Extensions",
+        videos: [
+          { thumb: "images/tool-thumb.jpg", src: "videos/tool.mp4", title: "Editor Walkthrough" },
+        ],
+      },
+    ],
+  },
+  {
+    category: "Confidential",
+    confidential: true,
+    groups: [
+      {
+        title: "Prototype XYZ",
+        videos: [
+          { thumb: "images/conf-thumb.jpg", src: "videos/conf.mp4", title: "Confidential Demo" },
+        ],
+      },
+    ],
   },
 ];
