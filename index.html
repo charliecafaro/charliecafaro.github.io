@@ -8,7 +8,7 @@
   <meta name="description" content="Charlie's GameDev Portfolio" />
   <meta
           name="keywords"
-          content="portfolio,website,personal website,github,projects,computer science and engineering, Unity, games, game development, art"
+          content="portfolio,website,personal website,github,projects,game development,Unity,games,tools"
   />
   <meta name="author" content="Charlie Cafaro" />
 
@@ -18,7 +18,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
   />
   <link
-          href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans|Raleway&display=swap"
+          href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,600|Raleway:400,600&display=swap"
           rel="stylesheet"
   />
   <link rel="icon" type="image/png" href="./logo.png" />
@@ -31,7 +31,7 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
   />
 
-  <!-- JS (head) -->
+  <!-- JS -->
   <script src="js/modernizr-2.6.2.min.js"></script>
 </head>
 
@@ -74,9 +74,6 @@
             <li><a href="#" data-nav-section="skills">Skills</a></li>
             <li><a href="#" data-nav-section="projects">Projects</a></li>
             <li>
-              <a href="#" data-nav-section="repos">Work Samples</a>
-            </li>
-            <li>
               <a href="#" data-nav-section="experience">Work Experience</a>
             </li>
             <li><a href="#" data-nav-section="education">Education</a></li>
@@ -94,7 +91,13 @@
           <div class="row animate-box" data-animate-effect="fadeInLeft">
             <div class="about-desc">
               <h1>About</h1>
-              <div id="bio"></div>
+              <p>
+                I’m <strong>Charlie Cafaro</strong>, a Unity Developer and
+                Technical Artist. I specialize in creating tools,
+                cinematics, shaders, and full gameplay systems. I’ve worked
+                on dozens of games and internal tools, and I’m passionate
+                about making both polished gameplay and efficient pipelines.
+              </p>
             </div>
           </div>
         </div>
@@ -118,15 +121,19 @@
       <!-- Projects -->
       <section class="colorlib-projects" data-section="projects">
         <div class="colorlib-narrow-content">
-          <h2 class="colorlib-heading">Projects</h2>
-          <button
-                  onclick="unlockConfidential()"
-                  style="margin-bottom: 15px;"
-          >
-            Unlock Confidential Work
-          </button>
+          <div class="row animate-box" data-animate-effect="fadeInLeft">
+            <div class="about-desc">
+              <h1>Projects</h1>
+              <button
+                      class="btn-unlock"
+                      onclick="unlockConfidential()"
+              >
+                Unlock Confidential Work
+              </button>
+            </div>
+          </div>
           <div id="projects-accordion">
-            <!-- Dynamic projects injected by main.js -->
+            <!-- Projects injected here -->
           </div>
         </div>
       </section>
@@ -138,110 +145,6 @@
         <div class="caption"></div>
       </div>
 
-      <!-- Profile Cards -->
-      <section class="colorlib-profile" data-section="profile-card">
-        <div class="colorlib-narrow-content">
-          <div
-                  class="row row-bottom-padded-sm animate-box"
-                  data-animate-effect="fadeInLeft"
-          >
-            <div class="profile-cards">
-              <div class="col">
-                <div class="stack-card" user-id="8461233"></div>
-              </div>
-              <div class="col">
-                <div class="github-card" username="vinaysomawat"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Repos -->
-      <section class="colorlib-experience no-print" data-section="repos">
-        <div class="colorlib-narrow-content">
-          <div
-                  class="row row-bottom-padded-sm animate-box"
-                  data-animate-effect="fadeInLeft"
-          >
-            <div class="about-desc">
-              <a
-                      href="https://github.com/vinaysomawat"
-                      target="_blank"
-                      style="color: inherit"
-              >
-                <h1>
-                  Top <span style="color: #f9bf3f">Repositories</span>
-                  <i
-                          class="fa fa-external-link"
-                          aria-hidden="true"
-                          style="font-size: 30px"
-                  ></i>
-                </h1>
-              </a>
-            </div>
-          </div>
-          <ul
-                  id="repos-accordion"
-                  class="accordion animate-box"
-                  data-animate-effect="fadeInLeft"
-          >
-            <li class="open">
-              <ul
-                      id="repos"
-                      class=""
-                      style="display: block; padding: 10px"
-              ></ul>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Blogs -->
-      <section class="colorlib-blogs no-print" data-section="blogs">
-        <div class="colorlib-narrow-content">
-          <div
-                  class="row row-bottom-padded-sm animate-box"
-                  data-animate-effect="fadeInLeft"
-          >
-            <div class="about-desc">
-              <a
-                      href="https://vinaysomawat.medium.com/"
-                      target="_blank"
-                      style="color: inherit"
-              >
-                <h1>
-                  Latest <span style="color: #f9bf3f">Blogs</span>
-                  <i
-                          class="fa fa-external-link"
-                          aria-hidden="true"
-                          style="font-size: 30px"
-                  ></i>
-                </h1>
-              </a>
-            </div>
-          </div>
-          <ul
-                  id="blogs-accordion"
-                  class="accordion animate-box"
-                  data-animate-effect="fadeInLeft"
-          >
-            <li class="open">
-              <ul
-                      id="blogs"
-                      class="submenu"
-                      style="
-                      display: flex;
-                      padding: 10px;
-                      flex-direction: column;
-                      gap: 10px;
-                    "
-              ></ul>
-            </li>
-          </ul>
-        </div>
-      </section>
-
       <!-- Experience -->
       <section class="colorlib-experience" data-section="experience">
         <div class="colorlib-narrow-content">
@@ -250,28 +153,10 @@
                   data-animate-effect="fadeInLeft"
           >
             <div class="about-desc">
-              <h1>Work <span style="color: #f9bf3f">Experience</span></h1>
+              <h1>Work <span style="color: #3a8ddf">Experience</span></h1>
             </div>
           </div>
           <div class="timeline-centered" id="experience"></div>
-        </div>
-      </section>
-
-      <!-- Trekking -->
-      <section class="colorlib-skills" data-section="trekking">
-        <div class="colorlib-narrow-content">
-          <div
-                  class="row row-bottom-padded-sm animate-box"
-                  data-animate-effect="fadeInLeft"
-          >
-            <div class="about-desc">
-              <h1>
-                Trekking <span style="color: #f9bf3f">Adventures</span>
-              </h1>
-              <p>Here are the treks I’ve explored so far:</p>
-              <div id="trekking" class="row"></div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -303,8 +188,7 @@
             <p>
               Feel free to email me at
               <strong>charliecafaro@gmail.com</strong> for questions,
-              business opportunities, or just to say hello—I’d love to hear
-              from you!
+              collaborations, or opportunities. I’d love to hear from you!
             </p>
           </div>
         </div>
@@ -323,7 +207,6 @@
 <!-- Scripts -->
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.waypoints.min.js"></script>
-<script src="js/profile-card.js"></script>
 <script src="js/main.js"></script>
 <script type="module" src="index.js"></script>
 </body>
