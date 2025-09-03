@@ -42,4 +42,74 @@ export const education = [
     duration: "2012 – 2016",
     subtitle: "Montevideo, Uruguay",
     details: [],
-    tags: ["Programming", "Software
+    tags: ["Programming", "Software Engineering", "Graphics"],
+    icon: "graduation-cap"
+  }
+];
+
+export const footer = [
+  {
+    label: "Links",
+    data: [
+      {
+        text: "GitHub",
+        link: "https://github.com/charliecafaro"
+      },
+      {
+        text: "Buy me a coffee",
+        link: "https://www.buymeacoffee.com/r194dME8y"
+      }
+    ]
+  },
+  {
+    label: "copyright-text",
+    data: ["Made with ♥ by Charlie Cafaro"]
+  }
+];
+
+/* -------------------
+   PROJECTS DATA
+-------------------- */
+export const projects = [
+  {
+    category: "Games",
+    groups: [
+      {
+        title: "Survival RPG",
+        videos: [
+          { thumb: "images/rpg-thumb1.jpg", src: "videos/rpg1.mp4", title: "Gameplay Trailer" },
+          { thumb: "images/rpg-thumb2.jpg", src: "videos/rpg2.mp4", title: "Combat Showcase" }
+        ]
+      },
+      {
+        title: "Puzzle Adventure",
+        videos: [
+          { thumb: "images/puzzle-thumb.jpg", src: "videos/puzzle.mp4", title: "Level Demo" }
+        ]
+      }
+    ]
+  },
+  {
+    category: "Tools",
+    groups: [
+      {
+        title: "Unity Editor Extensions",
+        videos: [
+          { thumb: "images/tool-thumb.jpg", src: "videos/tool.mp4", title: "Editor Walkthrough" }
+        ]
+      }
+    ]
+  },
+  {
+    category: "Confidential",
+    confidential: true,
+    groups: [
+      {
+        title: "Prototype XYZ",
+        videos: [
+          { thumb: "images/conf-thumb.jpg", src: "videos/conf.mp4", title: "Confidential Demo" }
+        ]
+      }
+    ]
+  }
+];
