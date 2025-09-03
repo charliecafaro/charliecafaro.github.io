@@ -1,166 +1,386 @@
-import { projects } from "./data.js";
+/**
+ * Portfolio Navigation & Interactions
+ * Clean, efficient JavaScript for Charlie Cafaro's portfolio
+ */
 
-(function () {
-  "use strict";
+class Portfolio {
+  constructor() {
+    this.currentSection = 'about';
+    this.navLinks = document.querySelectorAll('.nav-link');
+    this.sections = document.querySelectorAll('.section');
+    this.init();
+  }
 
-  var isMobile = {
-    any: function () {
-      return /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(
-          navigator.userAgent
-      );
-    },
-  };
+  init() {
+    this.setupNavigation();
+    this.setupScrollObserver();
+    this.setupAnimations();
+    this.setupMobileMenu();
 
-  var fullHeight = function () {
-    if (!isMobile.any()) {
-      $(".js-fullheight").css("height", $(window).height());
-      $(window).resize(function () {
-        $(".js-fullheight").css("height", $(window).height());
+    // Set initial active section
+    this.showSection('about');
+
+    console.log('Portfolio initialized successfully');
+  }
+
+  setupNavigation() {
+    this.navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetSection = link.getAttribute('data-section');
+        this.showSection(targetSection);
+        this.updateNavigation(targetSection);
       });
-    }
-  };
-
-  var contentWayPoint = function () {
-    var i = 0;
-    $(".animate-box").waypoint(
-        function (direction) {
-          if (direction === "down" && !$(this.element).hasClass("animated")) {
-            i++;
-            $(this.element).addClass("item-animate");
-            setTimeout(function () {
-              $("body .animate-box.item-animate").each(function (k) {
-                var el = $(this);
-                setTimeout(function () {
-                  el.addClass("fadeInUp animated");
-                  el.removeClass("item-animate");
-                }, k * 200, "easeInOutExpo");
-              });
-            }, 100);
-          }
-        },
-        { offset: "85%" }
-    );
-  };
-
-  var burgerMenu = function () {
-    $(".js-colorlib-nav-toggle").on("click", function (event) {
-      event.preventDefault();
-      var $this = $(this);
-      $("body").toggleClass("offcanvas");
-      $this.toggleClass("active");
     });
-  };
+  }
 
-  var mobileMenuOutsideClick = function () {
-    $(document).click(function (e) {
-      var container = $("#colorlib-aside, .js-colorlib-nav-toggle");
-      if (!container.is(e.target) && container.has(e.target).length === 0) {
-        $("body").removeClass("offcanvas");
-        $(".js-colorlib-nav-toggle").removeClass("active");
+  showSection(sectionId) {
+    // Hide all sections
+    this.sections.forEach(section => {
+      section.classList.remove('active');
+    });
+
+    // Show target section
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+      targetSection.classList.add('active');
+      this.currentSection = sectionId;
+
+      // Animate section entrance
+      this.animateSection(targetSection);
+    }
+  }
+
+  updateNavigation(activeSection) {
+    this.navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('data-section') === activeSection) {
+        link.classList.add('active');
       }
     });
-  };
+  }
 
-  $(function () {
-    fullHeight();
-    contentWayPoint();
-    burgerMenu();
-    mobileMenuOutsideClick();
-    renderProjects();
-    bindVideoModal();
-  });
-})();
+  animateSection(section) {
+    // Add entrance animation class
+    section.style.opacity = '0';
+    section.style.transform = 'translateY(20px)';
 
-/* -------------------
-   CONFIDENTIAL UNLOCK
--------------------- */
-function unlockConfidential() {
-  const pwd = prompt("Enter password:");
-  if (pwd === "blue123") {
-    document.querySelectorAll(".confidential").forEach((el) => {
-      el.style.display = "block";
+    // Trigger animation
+    requestAnimationFrame(() => {
+      section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      section.style.opacity = '1';
+      section.style.transform = 'translateY(0)';
     });
-  } else {
-    alert("Wrong password.");
+  }
+
+  setupScrollObserver() {
+    // Intersection Observer for animations when elements come into view
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animatable elements
+    const animatableElements = document.querySelectorAll(
+        '.stat-card, .skill-category, .project-card, .timeline-item'
+    );
+
+    animatableElements.forEach(el => {
+      observer.observe(el);
+    });
+  }
+
+  setupAnimations() {
+    // Add CSS for animations
+    const style = document.createElement('style');
+    style.textContent = `
+      .stat-card,
+      .skill-category,
+      .project-card,
+      .timeline-item {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      
+      .animate-in {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+      }
+      
+      /* Stagger animation delays */
+      .stat-card:nth-child(1) { transition-delay: 0.1s; }
+      .stat-card:nth-child(2) { transition-delay: 0.2s; }
+      .stat-card:nth-child(3) { transition-delay: 0.3s; }
+      .stat-card:nth-child(4) { transition-delay: 0.4s; }
+      
+      .skill-category:nth-child(1) { transition-delay: 0.1s; }
+      .skill-category:nth-child(2) { transition-delay: 0.2s; }
+      .skill-category:nth-child(3) { transition-delay: 0.3s; }
+      
+      .project-card:nth-child(1) { transition-delay: 0.1s; }
+      .project-card:nth-child(2) { transition-delay: 0.2s; }
+      .project-card:nth-child(3) { transition-delay: 0.3s; }
+      .project-card:nth-child(4) { transition-delay: 0.4s; }
+    `;
+    document.head.appendChild(style);
+  }
+
+  setupMobileMenu() {
+    // Handle mobile navigation
+    const sidebar = document.querySelector('.sidebar');
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    // Add mobile menu toggle if needed
+    if (window.innerWidth <= 768) {
+      this.createMobileToggle();
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 768 && !document.querySelector('.mobile-toggle')) {
+        this.createMobileToggle();
+      } else if (window.innerWidth > 768) {
+        const toggle = document.querySelector('.mobile-toggle');
+        if (toggle) {
+          toggle.remove();
+        }
+        sidebar.classList.remove('mobile-open');
+      }
+    });
+  }
+
+  createMobileToggle() {
+    const toggle = document.createElement('button');
+    toggle.className = 'mobile-toggle';
+    toggle.innerHTML = '<i class="fas fa-bars"></i>';
+    toggle.setAttribute('aria-label', 'Toggle navigation menu');
+
+    const mainContent = document.querySelector('.main-content');
+    mainContent.insertBefore(toggle, mainContent.firstChild);
+
+    // Add mobile toggle styles
+    const mobileStyles = document.createElement('style');
+    mobileStyles.textContent = `
+      .mobile-toggle {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background: var(--primary);
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: var(--shadow);
+      }
+      
+      .mobile-toggle:hover {
+        background: var(--primary-hover);
+        transform: scale(1.05);
+      }
+      
+      @media (min-width: 769px) {
+        .mobile-toggle {
+          display: none;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+        }
+        
+        .sidebar.mobile-open {
+          transform: translateX(0);
+        }
+        
+        .main-content {
+          margin-left: 0;
+        }
+      }
+    `;
+    document.head.appendChild(mobileStyles);
+
+    // Toggle functionality
+    const sidebar = document.querySelector('.sidebar');
+    toggle.addEventListener('click', () => {
+      sidebar.classList.toggle('mobile-open');
+      const icon = toggle.querySelector('i');
+      if (sidebar.classList.contains('mobile-open')) {
+        icon.className = 'fas fa-times';
+      } else {
+        icon.className = 'fas fa-bars';
+      }
+    });
+
+    // Close menu when clicking nav links on mobile
+    this.navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          sidebar.classList.remove('mobile-open');
+          toggle.querySelector('i').className = 'fas fa-bars';
+        }
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768 &&
+          !sidebar.contains(e.target) &&
+          !toggle.contains(e.target) &&
+          sidebar.classList.contains('mobile-open')) {
+        sidebar.classList.remove('mobile-open');
+        toggle.querySelector('i').className = 'fas fa-bars';
+      }
+    });
   }
 }
 
-/* -------------------
-   VIDEO MODAL
--------------------- */
-function openVideo(src, title) {
-  const modal = document.getElementById("videoModal");
-  const video = modal.querySelector("video");
-  const caption = modal.querySelector(".caption");
-
-  video.src = src;
-  caption.textContent = title;
-  modal.style.display = "flex";
-  video.play();
-}
-
-function closeVideo() {
-  const modal = document.getElementById("videoModal");
-  const video = modal.querySelector("video");
-  modal.style.display = "none";
-  video.pause();
-  video.src = "";
-}
-
-function bindVideoModal() {
-  document.querySelector("#videoModal .close").addEventListener("click", closeVideo);
-}
-
-/* -------------------
-   PROJECT RENDERING
--------------------- */
-function renderProjects() {
-  const container = document.getElementById("projects-accordion");
-  if (!container) return;
-
-  projects.forEach((cat) => {
-    const catDiv = document.createElement("div");
-    catDiv.className =
-        "project-category" + (cat.confidential ? " confidential" : "");
-    if (cat.confidential) catDiv.style.display = "none";
-
-    const header = document.createElement("div");
-    header.className = "project-header";
-    header.textContent = cat.category;
-    header.onclick = () => {
-      const content = catDiv.querySelector(".project-content");
-      content.style.display =
-          content.style.display === "block" ? "none" : "block";
+// Utility functions
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
     };
-    catDiv.appendChild(header);
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
 
-    const content = document.createElement("div");
-    content.className = "project-content";
+function throttle(func, limit) {
+  let inThrottle;
+  return function() {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  }
+}
 
-    cat.groups.forEach((group) => {
-      const groupDiv = document.createElement("div");
-      groupDiv.className = "project-group";
+// Enhanced interactions
+class PortfolioEnhancements {
+  constructor() {
+    this.setupSkillLevels();
+    this.setupProjectHovers();
+    this.setupTimelineAnimations();
+    this.setupFormValidation();
+  }
 
-      const title = document.createElement("h4");
-      title.textContent = group.title;
-      groupDiv.appendChild(title);
+  setupSkillLevels() {
+    const skillLevels = document.querySelectorAll('.skill-level');
 
-      const grid = document.createElement("div");
-      grid.className = "video-grid";
+    skillLevels.forEach(level => {
+      level.style.cursor = 'help';
+      level.addEventListener('mouseenter', () => {
+        const levelNumber = level.getAttribute('data-level');
+        level.setAttribute('title', `Skill Level: ${levelNumber}/5`);
+      });
+    });
+  }
 
-      group.videos.forEach((v) => {
-        const thumb = document.createElement("div");
-        thumb.className = "video-thumb";
-        thumb.innerHTML = `<img src="${v.thumb}" alt="${v.title}"><span>${v.title}</span>`;
-        thumb.onclick = () => openVideo(v.src, v.title);
-        grid.appendChild(thumb);
+  setupProjectHovers() {
+    const projectCards = document.querySelectorAll('.project-card');
+
+    projectCards.forEach(card => {
+      const icon = card.querySelector('.project-icon');
+
+      card.addEventListener('mouseenter', () => {
+        icon.style.transform = 'scale(1.1)';
+        icon.style.transition = 'transform 0.3s ease';
       });
 
-      groupDiv.appendChild(grid);
-      content.appendChild(groupDiv);
+      card.addEventListener('mouseleave', () => {
+        icon.style.transform = 'scale(1)';
+      });
+    });
+  }
+
+  setupTimelineAnimations() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    timelineItems.forEach((item, index) => {
+      item.addEventListener('mouseenter', () => {
+        item.style.transform = 'translateX(12px)';
+      });
+
+      item.addEventListener('mouseleave', () => {
+        item.style.transform = 'translateX(0)';
+      });
+    });
+  }
+
+  setupFormValidation() {
+    // If there's a contact form in the future, add validation here
+    const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+
+    emailLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        // Track email clicks for analytics if needed
+        console.log('Email link clicked');
+      });
+    });
+  }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  const portfolio = new Portfolio();
+  const enhancements = new PortfolioEnhancements();
+
+  // Add smooth page transitions
+  document.body.style.opacity = '0';
+  setTimeout(() => {
+    document.body.style.transition = 'opacity 0.5s ease';
+    document.body.style.opacity = '1';
+  }, 100);
+
+  // Performance optimization: Lazy load images
+  if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.classList.remove('lazy');
+          imageObserver.unobserve(img);
+        }
+      });
     });
 
-    catDiv.appendChild(content);
-    container.appendChild(catDiv);
-  });
-}
+    document.querySelectorAll('img[data-src]').forEach(img => {
+      imageObserver.observe(img);
+    });
+  }
+});
+
+// Handle browser back/forward navigation
+window.addEventListener('popstate', (e) => {
+  if (e.state && e.state.section) {
+    const portfolio = new Portfolio();
+    portfolio.showSection(e.state.section);
+    portfolio.updateNavigation(e.state.section);
+  }
+});
+
+// Export for potential external use
+window.Portfolio = Portfolio;
