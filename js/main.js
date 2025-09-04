@@ -1,6 +1,6 @@
 /**
  * Portfolio Navigation & Interactions
- * Clean, efficient JavaScript for Charlie Cafaro's portfolio
+ * Refined JavaScript for Charlie Cafaro's portfolio
  */
 
 class Portfolio {
@@ -16,6 +16,7 @@ class Portfolio {
     this.setupScrollObserver();
     this.setupAnimations();
     this.setupMobileMenu();
+    this.setupGalleryVideos();
 
     // Set initial active section
     this.showSection('about');
@@ -61,23 +62,21 @@ class Portfolio {
   }
 
   animateSection(section) {
-    // Add entrance animation class
+    // Simple fade-in animation
     section.style.opacity = '0';
-    section.style.transform = 'translateY(20px)';
+    section.style.transform = 'translateY(10px)';
 
-    // Trigger animation
     requestAnimationFrame(() => {
-      section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      section.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
       section.style.opacity = '1';
       section.style.transform = 'translateY(0)';
     });
   }
 
   setupScrollObserver() {
-    // Intersection Observer for animations when elements come into view
     const observerOptions = {
       threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      rootMargin: '0px 0px -30px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -90,7 +89,7 @@ class Portfolio {
 
     // Observe all animatable elements
     const animatableElements = document.querySelectorAll(
-        '.stat-card, .skill-category, .project-card, .timeline-item'
+        '.stat-card, .skill-category, .project-card, .timeline-item, .gallery-item, .text-block'
     );
 
     animatableElements.forEach(el => {
@@ -99,16 +98,18 @@ class Portfolio {
   }
 
   setupAnimations() {
-    // Add CSS for animations
+    // Add subtle animations for elements
     const style = document.createElement('style');
     style.textContent = `
       .stat-card,
       .skill-category,
       .project-card,
-      .timeline-item {
+      .timeline-item,
+      .gallery-item,
+      .text-block {
         opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
       }
       
       .animate-in {
@@ -116,31 +117,83 @@ class Portfolio {
         transform: translateY(0) !important;
       }
       
-      /* Stagger animation delays */
+      /* Staggered delays */
       .stat-card:nth-child(1) { transition-delay: 0.1s; }
-      .stat-card:nth-child(2) { transition-delay: 0.2s; }
-      .stat-card:nth-child(3) { transition-delay: 0.3s; }
-      .stat-card:nth-child(4) { transition-delay: 0.4s; }
+      .stat-card:nth-child(2) { transition-delay: 0.15s; }
+      .stat-card:nth-child(3) { transition-delay: 0.2s; }
+      .stat-card:nth-child(4) { transition-delay: 0.25s; }
       
       .skill-category:nth-child(1) { transition-delay: 0.1s; }
       .skill-category:nth-child(2) { transition-delay: 0.2s; }
       .skill-category:nth-child(3) { transition-delay: 0.3s; }
       
       .project-card:nth-child(1) { transition-delay: 0.1s; }
-      .project-card:nth-child(2) { transition-delay: 0.2s; }
-      .project-card:nth-child(3) { transition-delay: 0.3s; }
-      .project-card:nth-child(4) { transition-delay: 0.4s; }
+      .project-card:nth-child(2) { transition-delay: 0.15s; }
+      .project-card:nth-child(3) { transition-delay: 0.2s; }
+      .project-card:nth-child(4) { transition-delay: 0.25s; }
+      
+      .gallery-item:nth-child(1) { transition-delay: 0.1s; }
+      .gallery-item:nth-child(2) { transition-delay: 0.15s; }
+      .gallery-item:nth-child(3) { transition-delay: 0.2s; }
+      .gallery-item:nth-child(4) { transition-delay: 0.25s; }
+      .gallery-item:nth-child(5) { transition-delay: 0.3s; }
+      .gallery-item:nth-child(6) { transition-delay: 0.35s; }
+      
+      .text-block:nth-child(1) { transition-delay: 0.1s; }
+      .text-block:nth-child(2) { transition-delay: 0.2s; }
+      .text-block:nth-child(3) { transition-delay: 0.3s; }
     `;
     document.head.appendChild(style);
   }
 
-  setupMobileMenu() {
-    // Handle mobile navigation
-    const sidebar = document.querySelector('.sidebar');
-    let touchStartY = 0;
-    let touchEndY = 0;
+  setupGalleryVideos() {
+    const videoPlaceholders = document.querySelectorAll('.video-placeholder');
 
-    // Add mobile menu toggle if needed
+    videoPlaceholders.forEach(placeholder => {
+      placeholder.addEventListener('click', (e) => {
+        e.preventDefault();
+        const galleryVideo = placeholder.closest('.gallery-video');
+        const iframe = galleryVideo.querySelector('iframe');
+
+        if (iframe && iframe.dataset.src) {
+          // Load and play the video
+          iframe.src = iframe.dataset.src + '?autoplay=1&rel=0';
+          galleryVideo.classList.add('playing');
+
+          // Optional: Analytics tracking
+          console.log('Video played:', iframe.title || 'Untitled video');
+        }
+      });
+    });
+
+    // Pause videos when leaving gallery section
+    const gallerySection = document.getElementById('gallery');
+    if (gallerySection) {
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            const target = mutation.target;
+            if (!target.classList.contains('active') && target.id === 'gallery') {
+              // Stop all playing videos
+              const playingVideos = target.querySelectorAll('.gallery-video.playing');
+              playingVideos.forEach(video => {
+                const iframe = video.querySelector('iframe');
+                if (iframe && iframe.src) {
+                  iframe.src = '';
+                  video.classList.remove('playing');
+                }
+              });
+            }
+          }
+        });
+      });
+
+      observer.observe(gallerySection, { attributes: true });
+    }
+  }
+
+  setupMobileMenu() {
+    // Add mobile toggle if on mobile
     if (window.innerWidth <= 768) {
       this.createMobileToggle();
     }
@@ -151,10 +204,13 @@ class Portfolio {
         this.createMobileToggle();
       } else if (window.innerWidth > 768) {
         const toggle = document.querySelector('.mobile-toggle');
+        const sidebar = document.querySelector('.sidebar');
         if (toggle) {
           toggle.remove();
         }
-        sidebar.classList.remove('mobile-open');
+        if (sidebar) {
+          sidebar.classList.remove('mobile-open');
+        }
       }
     });
   }
@@ -166,55 +222,9 @@ class Portfolio {
     toggle.setAttribute('aria-label', 'Toggle navigation menu');
 
     const mainContent = document.querySelector('.main-content');
-    mainContent.insertBefore(toggle, mainContent.firstChild);
-
-    // Add mobile toggle styles
-    const mobileStyles = document.createElement('style');
-    mobileStyles.textContent = `
-      .mobile-toggle {
-        position: fixed;
-        top: 1rem;
-        left: 1rem;
-        z-index: 1001;
-        background: var(--primary);
-        color: white;
-        border: none;
-        width: 50px;
-        height: 50px;
-        border-radius: 12px;
-        font-size: 1.2rem;
-        cursor: pointer;
-        transition: var(--transition);
-        box-shadow: var(--shadow);
-      }
-      
-      .mobile-toggle:hover {
-        background: var(--primary-hover);
-        transform: scale(1.05);
-      }
-      
-      @media (min-width: 769px) {
-        .mobile-toggle {
-          display: none;
-        }
-      }
-      
-      @media (max-width: 768px) {
-        .sidebar {
-          transform: translateX(-100%);
-          transition: transform 0.3s ease;
-        }
-        
-        .sidebar.mobile-open {
-          transform: translateX(0);
-        }
-        
-        .main-content {
-          margin-left: 0;
-        }
-      }
-    `;
-    document.head.appendChild(mobileStyles);
+    if (mainContent) {
+      mainContent.insertBefore(toggle, mainContent.firstChild);
+    }
 
     // Toggle functionality
     const sidebar = document.querySelector('.sidebar');
@@ -228,12 +238,15 @@ class Portfolio {
       }
     });
 
-    // Close menu when clicking nav links on mobile
+    // Close menu when clicking nav links
     this.navLinks.forEach(link => {
       link.addEventListener('click', () => {
         if (window.innerWidth <= 768) {
           sidebar.classList.remove('mobile-open');
-          toggle.querySelector('i').className = 'fas fa-bars';
+          const icon = toggle.querySelector('i');
+          if (icon) {
+            icon.className = 'fas fa-bars';
+          }
         }
       });
     });
@@ -241,49 +254,26 @@ class Portfolio {
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
       if (window.innerWidth <= 768 &&
+          sidebar &&
           !sidebar.contains(e.target) &&
           !toggle.contains(e.target) &&
           sidebar.classList.contains('mobile-open')) {
         sidebar.classList.remove('mobile-open');
-        toggle.querySelector('i').className = 'fas fa-bars';
+        const icon = toggle.querySelector('i');
+        if (icon) {
+          icon.className = 'fas fa-bars';
+        }
       }
     });
   }
 }
 
-// Utility functions
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
-
-function throttle(func, limit) {
-  let inThrottle;
-  return function() {
-    const args = arguments;
-    const context = this;
-    if (!inThrottle) {
-      func.apply(context, args);
-      inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
-    }
-  }
-}
-
-// Enhanced interactions
+// Enhanced interactions class
 class PortfolioEnhancements {
   constructor() {
     this.setupSkillLevels();
-    this.setupProjectHovers();
-    this.setupTimelineAnimations();
-    this.setupFormValidation();
+    this.setupHoverEffects();
+    this.setupEmailTracking();
   }
 
   setupSkillLevels() {
@@ -298,71 +288,73 @@ class PortfolioEnhancements {
     });
   }
 
-  setupProjectHovers() {
-    const projectCards = document.querySelectorAll('.project-card');
+  setupHoverEffects() {
+    // Subtle hover effects for cards
+    const cards = document.querySelectorAll('.project-card, .gallery-item, .stat-card, .skill-category');
 
-    projectCards.forEach(card => {
-      const icon = card.querySelector('.project-icon');
-
+    cards.forEach(card => {
       card.addEventListener('mouseenter', () => {
-        icon.style.transform = 'scale(1.1)';
-        icon.style.transition = 'transform 0.3s ease';
+        card.style.transform = 'translateY(-3px)';
       });
 
       card.addEventListener('mouseleave', () => {
-        icon.style.transform = 'scale(1)';
+        card.style.transform = '';
       });
     });
-  }
 
-  setupTimelineAnimations() {
+    // Timeline hover effects
     const timelineItems = document.querySelectorAll('.timeline-item');
+    timelineItems.forEach(item => {
+      const content = item.querySelector('.timeline-content');
+      if (content) {
+        item.addEventListener('mouseenter', () => {
+          content.style.transform = 'translateX(5px)';
+        });
 
-    timelineItems.forEach((item, index) => {
-      item.addEventListener('mouseenter', () => {
-        item.style.transform = 'translateX(12px)';
-      });
-
-      item.addEventListener('mouseleave', () => {
-        item.style.transform = 'translateX(0)';
-      });
+        item.addEventListener('mouseleave', () => {
+          content.style.transform = '';
+        });
+      }
     });
   }
 
-  setupFormValidation() {
-    // If there's a contact form in the future, add validation here
+  setupEmailTracking() {
+    // Track email link clicks
     const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
 
     emailLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        // Track email clicks for analytics if needed
-        console.log('Email link clicked');
+      link.addEventListener('click', () => {
+        console.log('Email contact initiated');
+        // Add analytics tracking here if needed
       });
     });
   }
 }
 
-// Initialize when DOM is loaded
+// Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize main portfolio functionality
   const portfolio = new Portfolio();
   const enhancements = new PortfolioEnhancements();
 
-  // Add smooth page transitions
+  // Smooth page load transition
   document.body.style.opacity = '0';
   setTimeout(() => {
-    document.body.style.transition = 'opacity 0.5s ease';
+    document.body.style.transition = 'opacity 0.4s ease';
     document.body.style.opacity = '1';
-  }, 100);
+  }, 50);
 
-  // Performance optimization: Lazy load images
+  // Lazy load images if any
   if ('IntersectionObserver' in window) {
     const imageObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
-          img.src = img.dataset.src;
-          img.classList.remove('lazy');
-          imageObserver.unobserve(img);
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+            observer.unobserve(img);
+          }
         }
       });
     });
@@ -371,16 +363,18 @@ document.addEventListener('DOMContentLoaded', () => {
       imageObserver.observe(img);
     });
   }
+
+  // Store portfolio instance globally for debugging
+  window.portfolioInstance = portfolio;
 });
 
-// Handle browser back/forward navigation
+// Handle browser navigation
 window.addEventListener('popstate', (e) => {
-  if (e.state && e.state.section) {
-    const portfolio = new Portfolio();
-    portfolio.showSection(e.state.section);
-    portfolio.updateNavigation(e.state.section);
+  if (e.state && e.state.section && window.portfolioInstance) {
+    window.portfolioInstance.showSection(e.state.section);
+    window.portfolioInstance.updateNavigation(e.state.section);
   }
 });
 
-// Export for potential external use
+// Export for external use
 window.Portfolio = Portfolio;
