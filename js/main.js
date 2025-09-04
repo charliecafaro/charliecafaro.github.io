@@ -426,7 +426,19 @@ window.addEventListener('load', () => {
 });
 
 // --- Skills V2 Rendering ---
-import { skillsV2, languages } from "./user-data/data.js";
+let skillsV2, languages;
+
+(async () => {
+  try {
+    const mod = await import("./user-data/data.js");
+    skillsV2 = mod.skillsV2;
+    languages = mod.languages;
+    // Only construct the skills UI if the nodes exist:
+    if (document.getElementById("skills-grid")) new SkillsRenderer();
+  } catch (e) {
+    console.warn("Skills module not loaded; nav/UI still functional.", e);
+  }
+})();
 
 class SkillsRenderer {
   constructor() {
@@ -446,7 +458,7 @@ class SkillsRenderer {
       this.filters.addEventListener("click", (e) => {
         const btn = e.target.closest(".filter-chip");
         if (!btn) return;
-        [...this.filters.querySelectorAll(".filter-chip")].forEach(b => b.classList.remove("active"));
+        Array.from(this.filters.querySelectorAll(".filter-chip")).forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         this.activeFilter = btn.dataset.filter;
         this.render();
