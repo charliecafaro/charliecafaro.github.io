@@ -1,16 +1,16 @@
 /**
  * Portfolio Data Configuration
- * Easy-to-edit content for Charlie Cafaro's portfolio
+ * Updated to match Charlie Cafaro's CV
  */
 
 export const portfolioData = {
   // Personal Information
   personal: {
     name: "Charlie Cafaro",
-    title: "Unity Technical Artist",
+    title: "Technical Artist | Game Developer | UI/UX Design",
     email: "charliecafaro@gmail.com",
-    location: "Remote / Worldwide",
-    availability: "Open for new opportunities",
+    location: "Montevideo, Uruguay",
+    availability: "Available for new opportunities",
     profileImage: "./logo.png"
   },
 
@@ -24,128 +24,141 @@ export const portfolioData = {
   // About Section
   about: {
     paragraphs: [
-      "I'm a seasoned Unity Technical Artist with deep expertise in building complex, Asset Store-quality tools and systems. My background spans custom editors, ECS architecture, shader development, and performance optimization.",
-      "I specialize in creating designer-friendly workflows and robust technical solutions that scale across large development teams. My tools like Material Forge and ActionForge demonstrate my commitment to clean architecture and extensible design.",
-      "Currently developing a 2.5D survival RPG while publishing advanced Unity tools, I bring both creative vision and technical precision to every project."
+      "With over a decade of experience in mobile game development and digital media, I bring expertise that spans Unity development, 3D modelling, animation and digital media, with a strong foundation in programming and UI/UX design.",
+      "I have proven ability to manage the entire production process, from visual direction to implementation, while collaborating with cross-functional teams to optimize workflows.",
+      "My experience includes designing and implementing custom Unity tools and pipelines, leading full game visual overhauls, and developing advanced shaders and post-processing effects to enhance visual storytelling."
     ],
     stats: [
-      { number: "5+", label: "Years Unity" },
-      { number: "10+", label: "Tools Built" },
-      { number: "3+", label: "Asset Store" },
-      { number: "50+", label: "Projects" }
+      { number: "10+", label: "Years Experience" },
+      { number: "3", label: "Companies" },
+      { number: "Unity", label: "Specialist" },
+      { number: "Full-Stack", label: "Developer" }
     ]
   },
 
-  // Skills Section
-  skills: [
-    {
-      category: "Unity Development",
-      skills: [
-        { name: "C# & Unity Core", level: 5 },
-        { name: "ECS & DOTS", level: 4 },
-        { name: "UI Toolkit", level: 5 },
-        { name: "Custom Editors", level: 5 }
-      ]
-    },
-    {
-      category: "Graphics & Shaders",
-      skills: [
-        { name: "HLSL/ShaderGraph", level: 4 },
-        { name: "URP Pipeline", level: 4 },
-        { name: "VFX Graph", level: 3 },
-        { name: "Blender", level: 3 }
-      ]
-    },
-    {
-      category: "Tools & Pipeline",
-      skills: [
-        { name: "Asset Pipelines", level: 5 },
-        { name: "Performance Optimization", level: 4 },
-        { name: "Git & Version Control", level: 5 },
-        { name: "CI/CD Pipelines", level: 3 }
-      ]
-    }
-  ],
-
-  // Projects Section
+    // Projects Section - Updated based on experience
   projects: [
     {
-      title: "Material Forge",
-      icon: "fas fa-hammer",
-      description: "Advanced Unity tool for procedural material generation with real-time preview, batch processing, and extensive customization options.",
-      tags: ["Unity", "C#", "UI Toolkit", "Shaders", "Asset Store"],
+      title: "Unity Tools & Pipelines",
+      icon: "fas fa-tools",
+      description: "Designed and implemented custom Unity tools and pipelines at Homa, optimizing asset workflows and visual quality across multiple game projects.",
+      tags: ["Unity", "C#", "Pipeline", "Tools", "Optimization"],
       links: [
-        { text: "Asset Store", url: "#", type: "primary", icon: "fab fa-unity" },
-        { text: "GitHub", url: "#", type: "secondary", icon: "fab fa-github" }
+        { text: "Learn More", url: "#", type: "primary", icon: "fas fa-info-circle" }
       ]
     },
     {
-      title: "ActionForge",
-      icon: "fas fa-cog",
-      description: "Visual scripting system for Unity with node-based editor, custom actions, and seamless integration with existing codebases.",
-      tags: ["Unity", "Visual Scripting", "Graph API", "Custom Editor"],
+      title: "Game Visual Overhauls",
+      icon: "fas fa-paint-brush",
+      description: "Led multiple full game visual overhauls, developing advanced shaders, post-processing effects, and cinematic sequences to enhance visual storytelling.",
+      tags: ["Shaders", "Post-Processing", "Visual Effects", "Cinematic"],
       links: [
-        { text: "Asset Store", url: "#", type: "primary", icon: "fab fa-unity" },
-        { text: "Demo", url: "#", type: "secondary", icon: "fas fa-play" }
+        { text: "Portfolio", url: "#", type: "primary", icon: "fas fa-images" }
       ]
     },
     {
-      title: "Survival RPG 2.5D",
+      title: "ECS Game Systems",
+      icon: "fas fa-cogs",
+      description: "Built responsive UI systems and developed core game logic using ECS patterns for performance and modularity at Pomelo Games.",
+      tags: ["Unity", "ECS", "Performance", "UI Systems", "Architecture"],
+      links: [
+        { text: "Case Study", url: "#", type: "primary", icon: "fas fa-chart-line" }
+      ]
+    },
+    {
+      title: "Cross-Platform Games",
       icon: "fas fa-gamepad",
-      description: "Comprehensive 2.5D survival RPG featuring ECS architecture, advanced inventory systems, crafting mechanics, and procedural generation.",
-      tags: ["Unity", "ECS", "RPG Systems", "Procedural", "2.5D"],
+      description: "Developed and maintained client-side game code across multiple platforms using ActionScript 3.0, HTML5 (Phaser), and C++ (Oxygine) at ConectaGames.",
+      tags: ["ActionScript", "HTML5", "C++", "Cross-Platform", "UI/UX"],
       links: [
-        { text: "Coming Soon", url: "#", type: "primary", icon: "fab fa-steam" },
-        { text: "Devlog", url: "#", type: "secondary", icon: "fab fa-youtube" }
-      ]
-    },
-    {
-      title: "Sequences Framework",
-      icon: "fas fa-magic",
-      description: "Powerful sequence management system built at Homa Games, widely adopted across multiple teams for managing game events and transitions.",
-      tags: ["Unity", "Framework", "Enterprise", "Timeline"],
-      links: [
-        { text: "Case Study", url: "#", type: "primary", icon: "fas fa-info-circle" }
+        { text: "Portfolio", url: "#", type: "primary", icon: "fas fa-desktop" }
       ]
     }
   ],
 
-  // Experience Section
+  // Experience Section - From CV
   experience: [
     {
-      company: "Homa Games",
-      position: "Senior Unity Technical Artist",
-      duration: "Feb 2022 - Present (3+ Years)",
-      description: "Leading technical development in the marketing department, building tools and frameworks used across dozens of projects and multiple teams.",
+      company: "Homa",
+      position: "Technical Artist & Game Developer",
+      duration: "2022 - 2025",
+      description: "Designed and implemented custom Unity tools and pipelines while leading visual overhauls and creating advanced technical art solutions.",
       achievements: [
-        "Developed the Sequences Framework, adopted company-wide for managing game events and transitions",
-        "Built custom Unity tools for rapid prototyping and asset pipeline optimization",
-        "Created automated testing systems that reduced QA time by 60%",
-        "Mentored junior developers and established coding standards across teams",
-        "Collaborated with designers to create intuitive, artist-friendly workflows"
+        "Designed and implemented custom Unity tools and pipelines",
+        "Led multiple full game visual overhauls, optimizing asset pipelines and visual quality",
+        "Developed advanced shaders, post-processing effects, and cinematic sequences",
+        "Produced 3D models, rigs, and textures for characters and environments",
+        "Created 2D animations and assets for UI and gameplay integration",
+        "Collaborated cross-functionally with developers, artists, and product managers",
+        "Provided technical art support and workflow optimization across departments"
       ],
-      technologies: ["Unity", "C#", "Custom Editors", "Pipeline Tools", "Team Leadership"]
+      technologies: ["Unity", "Shaders", "3D Modeling", "Animation", "Pipeline Tools"]
     },
     {
-      company: "Freelance / Asset Store",
-      position: "Unity Developer & Publisher",
-      duration: "2020 - Present",
-      description: "Independent development of Unity tools and systems, with focus on Asset Store publishing and client work.",
+      company: "Pomelo Games",
+      position: "Programmer",
+      duration: "2020 - 2021",
+      description: "Built responsive UI systems and developed core game logic using ECS patterns for performance optimization.",
       achievements: [
-        "Published multiple Asset Store tools with 4.8+ star ratings",
-        "Developed custom solutions for indie and AA game studios",
-        "Created comprehensive documentation and video tutorials",
-        "Built strong community presence through forums and Discord support"
+        "Built responsive UI systems with Unity's UI tools",
+        "Developed core game logic using ECS patterns for performance and modularity",
+        "Utilized bitmasking and enum flag serialization for efficient state management",
+        "Collaborated with top-level engineers, learning professional Unity development practices",
+        "Focused on clean architecture and scalable design patterns"
       ],
-      technologies: ["Unity", "Asset Store", "Client Work", "Documentation"]
+      technologies: ["Unity", "ECS", "UI Systems", "C#", "Performance Optimization"]
+    },
+    {
+      company: "ConectaGames",
+      position: "Game Developer & 2D Artist",
+      duration: "2012 - 2020",
+      description: "Full-stack game development including client-side programming, UI/UX design, and 2D asset creation across multiple platforms.",
+      achievements: [
+        "Developed client-side game code using ActionScript 3.0, HTML5 (Phaser), and C++ (Oxygine)",
+        "Designed and implemented responsive UI/UX elements",
+        "Created and animated 2D assets using traditional and programmatic techniques",
+        "Collaborated with senior engineers on Java-based server backend integration",
+        "Defined internal art production workflows and mentored junior team members",
+        "Produced technical documentation and bilingual content (Spanish/English)"
+      ],
+      technologies: ["ActionScript", "HTML5", "C++", "Java", "2D Animation", "UI/UX"]
+    }
+  ],
+
+  // Education Section - From CV
+  education: [
+    {
+      institution: "Universidad ORT Uruguay",
+      degree: "BA in Animation and Videogame Design",
+      duration: "2015 - 2020",
+      description: "Multidisciplinary training in game design, 3D/2D art, animation, and interactive development with Unity focus.",
+      achievements: [
+        "Acquired training in game design, 3D/2D art, animation, and interactive development",
+        "Strong focus on Unity-based prototyping and production workflows",
+        "Hands-on experience with Unity, Adobe Suite, and 3D tools",
+        "Graduation project awarded national development grant from ACAU"
+      ],
+      technologies: ["Unity", "Game Design", "3D Art", "Animation", "Adobe Suite"]
+    },
+    {
+      institution: "Universidad ORT Uruguay",
+      degree: "Computer Science",
+      duration: "2011 - 2013",
+      description: "Solid foundation in programming, algorithms, and software design principles.",
+      achievements: [
+        "Built foundation in programming, algorithms, and software design",
+        "Experience with OOP, databases, and debugging practices",
+        "Developed problem-solving and technical reasoning skills"
+      ],
+      technologies: ["Programming", "Algorithms", "OOP", "Databases"]
     }
   ],
 
   // Contact Information
   contact: {
     title: "Get In Touch",
-    subtitle: "Ready to collaborate on your next Unity project or discuss technical opportunities",
-    description: "Feel free to email me for questions, business opportunities, or just to say hello—I'd love to hear from you!",
+    subtitle: "Available for technical art projects, Unity development, and creative collaborations",
+    description: "Feel free to reach out for opportunities, collaborations, or just to connect—I'd love to hear about your project!",
     items: [
       {
         icon: "fas fa-envelope",
@@ -155,12 +168,12 @@ export const portfolioData = {
       {
         icon: "fas fa-map-marker-alt",
         title: "Location",
-        value: "Remote / Worldwide"
+        value: "Montevideo, Uruguay"
       },
       {
-        icon: "fas fa-clock",
-        title: "Availability",
-        value: "Open for new opportunities"
+        icon: "fas fa-briefcase",
+        title: "Status",
+        value: "Available for opportunities"
       }
     ]
   }
@@ -168,10 +181,7 @@ export const portfolioData = {
 
 // Dynamic content loading (optional - for future use)
 export const loadDynamicContent = async () => {
-  // This could load content from an API or CMS in the future
   try {
-    // Example: const response = await fetch('/api/portfolio-data');
-    // return await response.json();
     return portfolioData;
   } catch (error) {
     console.error('Error loading dynamic content:', error);
@@ -194,3 +204,52 @@ export const validatePortfolioData = (data) => {
 
 // Default export
 export default portfolioData;
+
+// Skills V2
+
+export const skillsV2 = [
+  {
+    group: "Programming & Development",
+    items: [
+      { name: "Unity", type: "Engine", tags: ["Gameplay", "Tools"] },
+      { name: "C#", type: "Language", tags: ["Gameplay", "Editor"] },
+      { name: "Java", type: "Language", tags: ["Back-end"] },
+      { name: "JavaScript", type: "Language", tags: ["Web", "UI"] },
+      { name: "C/C++", type: "Language", tags: ["Engines", "Performance"] },
+      { name: "Git", type: "Tooling", tags: ["VCS", "CI/CD"] },
+    ],
+  },
+  {
+    group: "3D & Technical Art",
+    items: [
+      { name: "3D Modelling", type: "3D", tags: ["Assets", "Optimization"] },
+      { name: "Rigging", type: "3D", tags: ["Characters", "Animation"] },
+      { name: "Texturing", type: "3D", tags: ["Substance", "UVs"] },
+      { name: "Topology", type: "3D", tags: ["Retopo", "Deformation"] },
+      { name: "3D & 2D Animation", type: "Animation", tags: ["Gameplay", "Cinematic"] },
+      { name: "Digital Illustration", type: "2D", tags: ["Concept", "UI"] },
+      { name: "Shaders", type: "Rendering", tags: ["URP/HDRP", "Post"] },
+      { name: "Post-Processing", type: "Rendering", tags: ["Color", "AA", "FX"] },
+    ],
+  },
+  {
+    group: "Creative Tools",
+    items: [
+      { name: "Adobe Animate", type: "Suite", tags: ["2D", "Animation"] },
+      { name: "Adobe Photoshop", type: "Suite", tags: ["2D", "Texturing"] },
+      { name: "Adobe After Effects", type: "Suite", tags: ["Motion", "Compositing"] },
+      { name: "Adobe Illustrator", type: "Suite", tags: ["Vector", "UI"] },
+      { name: "Spine 2D", type: "Animation", tags: ["Rigging", "UI/FX"] },
+      { name: "Clip Studio Paint EX", type: "2D", tags: ["Illustration", "Comics"] },
+      { name: "Blender", type: "3D DCC", tags: ["Model", "Rig", "Bake"] },
+      { name: "Maya", type: "3D DCC", tags: ["Rig", "Anim"] },
+      { name: "Substance Painter", type: "Texturing", tags: ["PBR", "Bakes"] },
+    ],
+  },
+];
+
+// Languages (from CV)
+export const languages = [
+  { name: "Spanish", level: "Native" },
+  { name: "English", level: "Proficient" },
+];

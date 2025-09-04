@@ -1,6 +1,5 @@
 /**
  * Portfolio Navigation & Interactions
- * Refined JavaScript for Charlie Cafaro's portfolio
  */
 
 class Portfolio {
@@ -136,12 +135,14 @@ class Portfolio {
       .gallery-item:nth-child(2) { transition-delay: 0.15s; }
       .gallery-item:nth-child(3) { transition-delay: 0.2s; }
       .gallery-item:nth-child(4) { transition-delay: 0.25s; }
-      .gallery-item:nth-child(5) { transition-delay: 0.3s; }
-      .gallery-item:nth-child(6) { transition-delay: 0.35s; }
       
       .text-block:nth-child(1) { transition-delay: 0.1s; }
       .text-block:nth-child(2) { transition-delay: 0.2s; }
       .text-block:nth-child(3) { transition-delay: 0.3s; }
+      
+      .timeline-item:nth-child(1) { transition-delay: 0.1s; }
+      .timeline-item:nth-child(2) { transition-delay: 0.2s; }
+      .timeline-item:nth-child(3) { transition-delay: 0.3s; }
     `;
     document.head.appendChild(style);
   }
@@ -271,21 +272,9 @@ class Portfolio {
 // Enhanced interactions class
 class PortfolioEnhancements {
   constructor() {
-    this.setupSkillLevels();
     this.setupHoverEffects();
     this.setupEmailTracking();
-  }
-
-  setupSkillLevels() {
-    const skillLevels = document.querySelectorAll('.skill-level');
-
-    skillLevels.forEach(level => {
-      level.style.cursor = 'help';
-      level.addEventListener('mouseenter', () => {
-        const levelNumber = level.getAttribute('data-level');
-        level.setAttribute('title', `Skill Level: ${levelNumber}/5`);
-      });
-    });
+    this.setupKeyboardNavigation();
   }
 
   setupHoverEffects() {
@@ -316,6 +305,18 @@ class PortfolioEnhancements {
         });
       }
     });
+
+    // Skill item hover effects
+    const skillItems = document.querySelectorAll('.skill-item');
+    skillItems.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        item.style.transform = 'translateY(-2px) scale(1.02)';
+      });
+
+      item.addEventListener('mouseleave', () => {
+        item.style.transform = '';
+      });
+    });
   }
 
   setupEmailTracking() {
@@ -327,6 +328,39 @@ class PortfolioEnhancements {
         console.log('Email contact initiated');
         // Add analytics tracking here if needed
       });
+    });
+  }
+
+  setupKeyboardNavigation() {
+    // Add keyboard navigation support
+    document.addEventListener('keydown', (e) => {
+      // Escape key closes mobile menu
+      if (e.key === 'Escape') {
+        const sidebar = document.querySelector('.sidebar');
+        const toggle = document.querySelector('.mobile-toggle');
+
+        if (sidebar && sidebar.classList.contains('mobile-open')) {
+          sidebar.classList.remove('mobile-open');
+          if (toggle) {
+            const icon = toggle.querySelector('i');
+            if (icon) {
+              icon.className = 'fas fa-bars';
+            }
+          }
+        }
+      }
+
+      // Number keys (1-7) for quick navigation
+      const numKey = parseInt(e.key);
+      if (numKey >= 1 && numKey <= 7 && !e.ctrlKey && !e.altKey) {
+        const sections = ['about', 'skills', 'projects', 'gallery', 'experience', 'education', 'contact'];
+        const targetSection = sections[numKey - 1];
+
+        if (targetSection && window.portfolioInstance) {
+          window.portfolioInstance.showSection(targetSection);
+          window.portfolioInstance.updateNavigation(targetSection);
+        }
+      }
     });
   }
 }
@@ -364,8 +398,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Store portfolio instance globally for debugging
+  // Store portfolio instance globally for debugging and keyboard navigation
   window.portfolioInstance = portfolio;
+
+  // Add helpful console message
+  console.log('🎮 Charlie Cafaro Portfolio loaded successfully!');
+  console.log('💡 Tips: Use number keys 1-7 for quick navigation, ESC to close mobile menu');
 });
 
 // Handle browser navigation
@@ -376,5 +414,156 @@ window.addEventListener('popstate', (e) => {
   }
 });
 
+// Performance optimization - preload critical resources
+window.addEventListener('load', () => {
+  // Preload video thumbnails or other assets if needed
+  const videoPlaceholders = document.querySelectorAll('.video-placeholder');
+
+  videoPlaceholders.forEach(placeholder => {
+    // Add subtle animation to indicate interactivity
+    placeholder.style.transition = 'all 0.3s ease';
+  });
+});
+
+// --- Skills V2 Rendering ---
+import { skillsV2, languages } from "./user-data/data.js";
+
+class SkillsRenderer {
+  constructor() {
+    this.grid = document.getElementById("skills-grid");
+    this.filters = document.getElementById("skills-filters");
+    this.search = document.getElementById("skills-search");
+    this.langList = document.getElementById("skills-languages");
+    this.activeFilter = "all";
+    this.data = skillsV2 || [];
+    this.bind();
+    this.render();
+    this.renderLanguages();
+  }
+
+  bind() {
+    if (this.filters) {
+      this.filters.addEventListener("click", (e) => {
+        const btn = e.target.closest(".filter-chip");
+        if (!btn) return;
+        [...this.filters.querySelectorAll(".filter-chip")].forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        this.activeFilter = btn.dataset.filter;
+        this.render();
+      });
+    }
+    if (this.search) {
+      this.search.addEventListener("input", () => this.render());
+    }
+  }
+
+  renderLanguages() {
+    if (!this.langList || !Array.isArray(languages)) return;
+    this.langList.innerHTML = "";
+    languages.forEach(l => {
+      const li = document.createElement("li");
+      li.className = "language-pill";
+      li.textContent = `${l.name} — ${l.level}`;
+      this.langList.appendChild(li);
+    });
+  }
+
+  render() {
+    if (!this.grid) return;
+    const q = (this.search?.value || "").trim().toLowerCase();
+    this.grid.innerHTML = "";
+
+    const groups = this.data.filter(g =>
+        this.activeFilter === "all" || g.group === this.activeFilter
+    );
+
+    const frag = document.createDocumentFragment();
+
+    groups.forEach(group => {
+      const groupEl = document.createElement("section");
+      groupEl.className = "skill-group";
+      groupEl.setAttribute("aria-labelledby", `h-${group.group.replace(/\s+/g, "-")}`);
+
+      const h = document.createElement("h3");
+      h.className = "group-title";
+      h.id = `h-${group.group.replace(/\s+/g, "-")}`;
+      h.textContent = group.group;
+
+      const wrap = document.createElement("div");
+      wrap.className = "skill-chip-wrap";
+
+      group.items
+          .filter(it => !q || it.name.toLowerCase().includes(q) || it.tags?.some(t => t.toLowerCase().includes(q)))
+          .forEach(it => wrap.appendChild(this.makeChip(it)));
+
+      // Hide empty groups after search
+      if (wrap.children.length) {
+        groupEl.append(h, wrap);
+        frag.appendChild(groupEl);
+      }
+    });
+
+    // Empty state
+    if (!frag.children.length) {
+      const empty = document.createElement("p");
+      empty.className = "empty-state";
+      empty.textContent = "No skills match your search.";
+      this.grid.appendChild(empty);
+    } else {
+      this.grid.appendChild(frag);
+    }
+  }
+
+  makeChip(it) {
+    const chip = document.createElement("button");
+    chip.className = "skill-chip";
+    chip.type = "button";
+    chip.setAttribute("aria-label", `${it.name} (${it.type})`);
+
+    // Left icon (pick a sensible FA fallback by type)
+    const icon = document.createElement("i");
+    icon.className = this.iconFor(it.type);
+    icon.setAttribute("aria-hidden", "true");
+
+    const name = document.createElement("span");
+    name.className = "skill-chip-name";
+    name.textContent = it.name;
+
+    const badge = document.createElement("span");
+    badge.className = "skill-chip-badge";
+    badge.textContent = it.type;
+
+    const tags = document.createElement("span");
+    tags.className = "skill-chip-tags";
+    tags.textContent = (it.tags && it.tags.length) ? it.tags.join(" • ") : "";
+
+    chip.append(icon, name, badge, tags);
+    return chip;
+  }
+
+  iconFor(type) {
+    switch (type) {
+      case "Engine": return "fas fa-cube";
+      case "Language": return "fas fa-code";
+      case "3D": return "fas fa-cubes";
+      case "Animation": return "fas fa-person-running";
+      case "Rendering": return "fas fa-wand-magic-sparkles";
+      case "Tooling": return "fas fa-screwdriver-wrench";
+      case "Suite": return "fas fa-shapes";
+      case "2D": return "fas fa-palette";
+      case "Texturing": return "fas fa-fill-drip";
+      case "3D DCC": return "fas fa-cubes";
+      default: return "fas fa-circle";
+    }
+  }
+}
+
+// Boot skills after your Portfolio init
+window.addEventListener("DOMContentLoaded", () => {
+  // If your Portfolio class already runs here, keep it.
+  try { new SkillsRenderer(); } catch (e) { console.warn(e); }
+});
+
 // Export for external use
 window.Portfolio = Portfolio;
+
