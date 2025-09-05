@@ -31,8 +31,8 @@ export const portfolioData = {
     stats: [
       { number: "10+", label: "Years Experience" },
       { number: "3", label: "Companies" },
-      { number: "Unity", label: "Specialist" },
-      { number: "Full-Stack", label: "Developer" }
+      { number: "50+", label: "Projects worked on" },
+      { number: "Editor", label: "Tools" }
     ]
   },
 

@@ -2,12 +2,14 @@
 :root {
 	/* Desaturated, cooler gradients */
 	--gradient-primary: linear-gradient(135deg, #5661e9 0%, #8b7cf2 50%, #a78bfa 100%);
-	--gradient-secondary: linear-gradient(135deg, #38bdf8 0%, #22d3ee 50%, #34d399 100%);
+	--gradient-secondary: linear-gradient(0deg, #28aae6 0%, #17bed8 50%, #34d3d3 100%);
 	/* Warm accent without harsh red: amber → rose → mauve */
 	--gradient-accent: linear-gradient(135deg, #fbbf24 0%, #fb7185 50%, #f472b6 100%);
 	--gradient-dark: linear-gradient(135deg, #0b1224 0%, #172131 50%, #223143 100%);
 	--gradient-surface: linear-gradient(135deg, #172131 0%, #223143 50%, #2b3d52 100%);
 	--gradient-card: linear-gradient(135deg, #223143 0%, #2b3d52 50%, #3b4e66 100%);
+	--gradient-profile-header: linear-gradient(358deg,rgba(25, 112, 179, 1) 0%, rgba(76, 194, 176, 1) 100%, rgba(83, 214, 237, 1) 50%);
+	--gradient-company-name: linear-gradient(0deg, #7780ef 0%, #978af1 50%, #b498ff 100%);
 
 	/* Softer accents (all slightly desaturated & lightened) */
 	--accent-blue:   #60a5fa;
@@ -33,6 +35,9 @@
 
 	/* Define missing neon token as a softer cyan */
 	--neon-cyan: #22d3ee;
+	
+	/* Shadows */
+	--shadow-neon: 0 0 20px rgba(139, 92, 246, 0.3);
 }
 
 /* Reset & Base Styles */
@@ -72,7 +77,7 @@ body::before {
 /* Portfolio Container */
 .portfolio-container {
 	display: flex;
-	min-height: 100vh;
+	min-height: 100vh;	
 }
 
 /* Sidebar Navigation - More Compact */
@@ -89,7 +94,7 @@ body::before {
 .profile-header {
 	padding: 2rem 1.5rem;
 	text-align: center;
-	background: var(--gradient-primary);
+	background: var(--gradient-profile-header);
 	position: relative;
 }
 
@@ -190,6 +195,11 @@ body::before {
 	margin-left: 260px;
 	flex: 1;
 	min-height: 100vh;
+	background-image: url("../assets/bg-texture.png");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position-x:  center;
+	background-size: auto;
 }
 
 /* Sections - Proper Sizing */
@@ -225,6 +235,7 @@ body::before {
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
 	letter-spacing: -0.5px;
+	text-shadow: 0 0 25px rgba(137, 169, 239, 0.5);
 }
 
 .section-subtitle {
@@ -233,6 +244,7 @@ body::before {
 	max-width: 600px;
 	margin: 0 auto;
 	line-height: 1.6;
+	text-shadow: 0 0 25px rgba(137, 169, 239, 0.5);
 }
 
 /* About Section - Better Proportions */
@@ -850,7 +862,7 @@ body::before {
 .project-icon i {
 	position: relative;
 	z-index: 1;
-	text-shadow: 0 0 20px rgba(255,255,255,0.5);
+	text-shadow: 0 0 20px rgba(255,255,255,0.25);
 	animation: float 3s ease-in-out infinite;
 }
 
@@ -1111,16 +1123,16 @@ body::before {
 
 .timeline-marker {
 	position: absolute;
-	left: 1.75rem;
+	left: 1.65rem;
 	top: 2rem;
 	width: 2rem;
 	height: 2rem;
-	background: var(--gradient-primary);
+	background: var(--gradient-company-name);
 	border: 4px solid var(--gradient-dark);
 	border-radius: 50%;
 	z-index: 1;
 	box-shadow: var(--shadow-neon);
-	animation: var(--glow-animation);
+	/*animation: var(--glow-animation);*/
 }
 
 .timeline-content {
@@ -1171,11 +1183,12 @@ body::before {
 .company-name {
 	font-size: 1.5rem;
 	font-weight: 700;
-	background: var(--gradient-primary);
+	background: var(--gradient-company-name);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
 	margin: 0;
+	text-shadow: 0 0 5px rgba(219, 187, 244, 0.2);
 }
 
 .job-duration {
